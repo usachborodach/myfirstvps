@@ -1,5 +1,6 @@
-local_backup_path="/home/user/backups/2026-07-23_wekan.zip"
-remote_backup_zip="/root/backups/2026-07-23_wekan.zip"
+#!/bin/bash
+local_backup_path="/home/user/backups/2026-07-24_wekan.zip"
+remote_backup_zip="/root/backups/2026-07-24_wekan.zip"
 
 scp "$local_backup_path" myfirstvps:/root/backups/
 ssh myfirstvps "docker stop wekan"
