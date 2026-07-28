@@ -1,10 +1,9 @@
 import sys
 import os
-
 base_path = os.path.dirname(__file__)
-mongo_backup_path = f'{base_path}/../mongo_backup'
 
-sys.path.append('/root/home/user/repos/myfirstvps/utilities/mongo_backup')
+mongo_backup_path = f'{base_path}/../mongo_backup'
+sys.path.append(mongo_backup_path)
 from mongo_backup import mongo_backup
 
 def main():
