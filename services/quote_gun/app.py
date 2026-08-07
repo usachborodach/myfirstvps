@@ -1,0 +1,32 @@
+from flask import Flask, render_template, send_from_directory
+from pymongo import MongoClient
+import argparse
+
+app = Flask(__name__)
+
+client = MongoClient(host='127.0.0.1', port=27017)
+db = client['quote_gun']
+quotes_collection = db['quotes']
+
+@app.route('/<category>')
+def quotes_by_category(category):
+    pipeline = [
+        {"$match": {"category": category}},
+        {"$sample": {"size": 10}}
+    ]
+    docs = list(quotes_collection.aggregate(pipeline))
+    items = [doc['text'] for doc in docs]
+    return render_template('index.html', items=items, category=category)
+
+@app.route('/favicon.png')
+def favicon():
+    return send_from_directory('static', 'favicon.png')
+
+def get_port():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--port')
+    args = parser.parse_args()
+    return args.port
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=get_port(), debug=True)
