@@ -5,7 +5,7 @@ import sys
 
 base_path = os.path.dirname(__file__)
 sys.path.append(f'{base_path}/../../')
-from utilities.fastapi.app.config import settings
+from utilities.api_server.app.config import settings
 
 def get_all_docs(db, collection):
     url = f"{settings.BASE_API_URL}/mongo/{db}/{collection}"
