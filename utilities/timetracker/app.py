@@ -133,7 +133,8 @@ def index():
                            date=date_obj,
                            hours=hours,
                            activities=ACTIVITIES,
-                           hours_list=HOURS)
+                           hours_list=HOURS,
+                           timedelta=timedelta)
 
 @app.route('/update', methods=['POST'])
 @login_required
