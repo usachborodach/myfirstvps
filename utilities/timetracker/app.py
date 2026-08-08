@@ -10,6 +10,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 load_dotenv()
 
 app = Flask(__name__)
@@ -38,9 +39,10 @@ def load_user(user_id):
     return None
 
 # Проверка пароля (простая, в реальном проекте используйте хеши)
+PASSWORD_HASH = os.getenv('PASSWORD_HASH')
 def verify_password(username, password):
     return (username == os.getenv('USERNAME') and
-            password == os.getenv('PASSWORD'))
+            check_password_hash(PASSWORD_HASH, password))
 
 # Список доступных активностей
 ACTIVITIES = [
