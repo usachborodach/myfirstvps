@@ -7,6 +7,14 @@ base_path = os.path.dirname(__file__)
 sys.path.append(f'{base_path}/../../')
 from utilities.api_server.app.config import settings
 
+def main():
+    docs = get_all_docs('quote_gun', 'quotes')
+    for doc in docs:
+        del doc['_id']
+    import yaml
+    with open('/tmp/quote_gun.yml', 'w') as fp:
+        yaml.safe_dump(docs, fp, allow_unicode=True)
+
 def get_all_docs(db, collection):
     url = f"{settings.BASE_API_URL}/mongo/{db}/{collection}"
     response = requests.get(url, headers=get_headers())
@@ -41,3 +49,6 @@ def get_headers():
         "Authorization": f"Bearer {os.getenv('TOKEN')}",
         "Content-Type": "application/json"
     }
+
+if __name__ == '__main__':
+    main()
