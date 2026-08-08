@@ -1,7 +1,6 @@
 [Unit]
 Description=Time Tracker Flask Service
-After=network.target mongod.service
-Requires=mongod.service
+After=network.target
 
 [Service]
 User=root
