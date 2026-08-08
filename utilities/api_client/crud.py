@@ -8,12 +8,17 @@ sys.path.append(f'{base_path}/../../')
 from utilities.api_server.app.config import settings
 
 def main():
-    docs = get_all_docs('quote_gun', 'quotes')
+    db = 'tracker'
+    collection = 'days'
+    docs = get_all_docs(db, collection)
     for doc in docs:
         del doc['_id']
     import yaml
-    with open('/tmp/quote_gun.yml', 'w') as fp:
+    file_path = f'/tmp/{collection}.yml'
+    with open(file_path, 'w') as fp:
         yaml.safe_dump(docs, fp, allow_unicode=True)
+    import subprocess
+    subprocess.run(['code', file_path])
 
 def get_all_docs(db, collection):
     url = f"{settings.BASE_API_URL}/mongo/{db}/{collection}"
