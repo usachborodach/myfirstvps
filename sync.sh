@@ -2,6 +2,7 @@
 git add .
 git commit
 git push
+
 ssh myfirstvps "cd myfirstvps && git pull"
 
 ssh myfirstvps "systemctl restart timetracker"
