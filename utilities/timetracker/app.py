@@ -74,9 +74,17 @@ def create_day_record(date):
 
 # Получить или создать запись за указанную дату
 def get_or_create_day(date):
-    doc = days_collection.find_one({'date': datetime(date.year, date.month, date.day)})
-    if not doc:
-        doc = create_day_record(date)
+    # Преобразуем date в datetime (как хранится в БД)
+    date_obj = datetime(date.year, date.month, date.day)
+    
+    # Пытаемся обновить или вставить документ атомарно
+    result = days_collection.update_one(
+        {'date': date_obj},
+        {'$setOnInsert': {'hours': {hour: '' for hour in HOURS}}},
+        upsert=True
+    )
+    # Возвращаем документ
+    doc = days_collection.find_one({'date': date_obj})
     return doc
 
 # Ежедневное создание записи на следующий день (запускается в 00:00)
