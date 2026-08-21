@@ -1,8 +1,9 @@
 #!/bin/bash
-backup_date="2026-07-28"
+backup_date="2026-08-21"
 ordinary_zip_path="/home/user/backups/"$backup_date"_wekan.zip"
 tmp_zip_path="/tmp/"$backup_date"_wekan.zip"
 
+ssh work "/usr/bin/python3 /home/user/repos/ShuraRepo/organizer/reminder/backup.py"
 scp work:"$ordinary_zip_path" "$tmp_zip_path"
 scp "$tmp_zip_path" myfirstvps:$tmp_zip_path
 ssh myfirstvps "docker stop wekan"

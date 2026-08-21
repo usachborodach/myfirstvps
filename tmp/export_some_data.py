@@ -15,5 +15,5 @@ dbs = {
 
 for db, collection in dbs.items():
     docs = get_all_docs(db, collection)
-    with open(f'{db}.{collection}.yml', 'w') as fp:
+    with open(f'exported_data/{db}.{collection}.yml', 'w') as fp:
         yaml.safe_dump(docs, fp, allow_unicode=True)
