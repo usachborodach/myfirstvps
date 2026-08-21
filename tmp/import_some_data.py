@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 import yaml
 from pymongo import MongoClient
 
@@ -10,6 +11,9 @@ client = MongoClient()
 for filename in os.listdir('exported_data'):
     file = open(f'exported_data/{filename}')
     docs = yaml.safe_load(file)
+    for doc in docs:
+        if 'date' in doc:
+            doc['date'] = datetime.strptime(doc['date'], '%Y-%m-%d')
     splitted_filename = filename.split('.')
     db_name, collection_name = splitted_filename[0], splitted_filename[1]
     db = client[db_name]
