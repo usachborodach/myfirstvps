@@ -1,23 +1,16 @@
-# from myfirstvps.utilities.api_client.crud import get_all_docs
+import os
+import yaml
+from myfirstvps.utilities.api_client.crud import get_all_docs
 
-# dbs = ['quote_gun', 'tracker']
+base_path = os.path.dirname(__file__)
+os.chdir(base_path)
 
-# for db in dbs:
-#     get_all_docs(db)
+dbs = {
+    'quote_gun': 'quotes',
+    'tracker': 'days'
+}
 
-
-from pymongo import MongoClient
-
-ADDRESS = 'localhost'
-port = 27017
-
-client = MongoClient(ADDRESS, port)
-
-dbs = ['quote_gun', 'tracker']
-
-for db_name in dbs:
-    db = client[db_name]               # получаем объект базы данных
-    collections = db.list_collection_names()   # список имён коллекций
-    print(f"База '{db_name}':")
-    for col in collections:
-        print(f"  - {col}")
+for db, collection in dbs.items():
+    docs = get_all_docs(db, collection)
+    with open(f'{db}.{collection}.yml', 'w') as fp:
+        yaml.safe_dump(docs, fp, allow_unicode=True)
