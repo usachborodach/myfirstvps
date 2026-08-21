@@ -1,4 +1,3 @@
-from pymongo import MongoClient
 import yaml
 from common import connect_to_mongo
 

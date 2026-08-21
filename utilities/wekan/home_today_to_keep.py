@@ -1,9 +1,7 @@
-from pymongo import MongoClient
 import pyperclip
 import webbrowser
+from common import connect_to_mongo
 
-MONGO_ADDRESS = '172.29.1.9'
-MONGO_PORT = 27017
 HOME_TODAY_LIST_ID = 'cph83ZAWgRkSbWD3o'
 
 def main():
@@ -27,11 +25,6 @@ def cards_to_clipboard(db):
     for doc in docs:
         res += doc['title'] + '\n'
     pyperclip.copy(res)
-
-def connect_to_mongo():
-    client = MongoClient(f'mongodb://{MONGO_ADDRESS}:{MONGO_PORT}/')
-    db = client['wekan']
-    return client, db
 
 if __name__ == "__main__":
     main()
