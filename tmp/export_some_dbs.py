@@ -1,5 +1,8 @@
 import os
 import yaml
+import sys
+
+sys.path.append('/root/myfirstvps')
 from myfirstvps.utilities.api_client.crud import get_all_docs
 
 base_path = os.path.dirname(__file__)
