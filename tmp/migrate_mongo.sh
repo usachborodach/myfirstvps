@@ -16,5 +16,5 @@ ssh myfirstvps "unzip -o $tmp_zip_path -d /tmp/"
 ssh myfirstvps "docker exec -i mongo sh -c 'mongorestore --archive' < /tmp/wekan.dump"
 ssh myfirstvps "docker start wekan"
 
-ssh myfirstvps "python3 /root/myfirstvps/tmp/import_some_data.sh"
-ssh myfirstvps "python3 /root/myfirstvps/tmp/create_indexes.sh"
+ssh myfirstvps "python3 /root/myfirstvps/tmp/import_some_data.py"
+ssh myfirstvps "python3 /root/myfirstvps/tmp/create_indexes.py"
