@@ -79,10 +79,5 @@ def get_lists_data(db):
     docs = list(cursor)
     return docs
 
-def connect_to_mongo():
-    client = MongoClient(f'mongodb://{MONGO_ADDRESS}:{MONGO_PORT}/')
-    db = client['wekan']
-    return client, db
-
 if __name__ == "__main__":
     main()
