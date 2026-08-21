@@ -9,7 +9,7 @@
 from pymongo import MongoClient
 
 ADDRESS = 'localhost'
-port = 29017
+port = 27017
 
 client = MongoClient(ADDRESS, port)
 
