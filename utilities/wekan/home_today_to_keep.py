@@ -1,10 +1,12 @@
 import pyperclip
 import webbrowser
 from common import connect_to_mongo
+import subprocess
 
 HOME_TODAY_LIST_ID = 'cph83ZAWgRkSbWD3o'
 
 def main():
+    subprocess.run(['ssh', '-L', '27017:localhost:27017', 'myfirstvps', '-N'])
     client, db = connect_to_mongo()
     cards_to_clipboard(db)
     open_keep()
