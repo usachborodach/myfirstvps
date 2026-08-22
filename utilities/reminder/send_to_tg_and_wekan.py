@@ -4,7 +4,7 @@ import csv
 import logger
 
 base_path = os.path.dirname(__file__)
-wekan_path = f'{base_path}/../..'
+wekan_path = f'{base_path}/..'
 sys.path.append(wekan_path)
 import wekan
 
