@@ -4,7 +4,7 @@ ordinary_zip_path="/home/user/backups/"$backup_date"_wekan.zip"
 tmp_zip_path="/tmp/"$backup_date"_wekan.zip"
 
 # ВНИМАТЕЛЬНО !
-# ssh myfirstvps "python3 /root/myfirstvps/tmp/export_some_data.sh"
+ssh myfirstvps "python3 /root/myfirstvps/tmp/export_some_data.py"
 
 ssh work "/usr/bin/python3 /home/user/repos/ShuraRepo/organizer/reminder/backup.py"
 scp work:"$ordinary_zip_path" "$tmp_zip_path"
