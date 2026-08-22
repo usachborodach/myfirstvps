@@ -10,7 +10,7 @@ try:
 except IndexError:
     ARGUMENT = None
 CURRENT_DATE = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
-bot = telebot.TeleBot('5641565819:AAFS-GmkHOHXeK12TClRCZB_Gh8ZKRHBRQs')
+bot = telebot.TeleBot('TOKEN')
 DEFAULT_PRINT_QUOTA = 24
 INTERFACE_WIDTH = 119
 PRINT_QUOTA = DEFAULT_PRINT_QUOTA
