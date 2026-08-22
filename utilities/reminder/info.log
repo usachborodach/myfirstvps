@@ -1,0 +1,3 @@
+2026-04-17 17:53:54,575 - ERROR - Error while adding new reminder: 'method' object is not subscriptable
+2026-04-17 17:54:58,414 - ERROR - Error while adding new reminder: 'method' object is not subscriptable
+2026-04-17 18:03:24,176 - ERROR - Error while adding new reminder: can only concatenate str (not "datetime.timedelta") to str

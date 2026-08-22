@@ -1,0 +1,25 @@
+2026-04-17 17:53:50,818 - DEBUG - Using selector: EpollSelector
+2026-04-17 17:53:53,227 - DEBUG - Using selector: EpollSelector
+2026-04-17 17:53:54,575 - ERROR - Error while adding new reminder: 'method' object is not subscriptable
+2026-04-17 17:54:52,555 - DEBUG - Using selector: EpollSelector
+2026-04-17 17:54:54,987 - DEBUG - Using selector: EpollSelector
+2026-04-17 17:54:58,414 - ERROR - Error while adding new reminder: 'method' object is not subscriptable
+2026-04-17 17:56:29,556 - DEBUG - Using selector: EpollSelector
+2026-04-17 17:56:30,960 - DEBUG - Using selector: EpollSelector
+2026-04-17 17:56:31,877 - DEBUG - Using selector: EpollSelector
+2026-04-17 17:56:35,839 - DEBUG - Using selector: EpollSelector
+2026-04-17 17:56:36,798 - DEBUG - Using selector: EpollSelector
+2026-04-17 17:56:37,676 - DEBUG - Using selector: EpollSelector
+2026-04-17 17:56:40,303 - DEBUG - Using selector: EpollSelector
+2026-04-17 17:56:41,218 - DEBUG - Using selector: EpollSelector
+2026-04-17 17:56:42,224 - DEBUG - Using selector: EpollSelector
+2026-04-17 18:03:21,342 - DEBUG - Using selector: EpollSelector
+2026-04-17 18:03:24,176 - ERROR - Error while adding new reminder: can only concatenate str (not "datetime.timedelta") to str
+2026-04-17 18:05:09,065 - DEBUG - Using selector: EpollSelector
+2026-04-17 18:05:10,117 - DEBUG - Using selector: EpollSelector
+2026-04-17 18:05:16,552 - DEBUG - Using selector: EpollSelector
+2026-04-17 18:05:17,478 - DEBUG - Using selector: EpollSelector
+2026-04-17 18:05:19,929 - DEBUG - Using selector: EpollSelector
+2026-04-17 18:05:20,884 - DEBUG - Using selector: EpollSelector
+2026-04-17 18:05:22,707 - DEBUG - Using selector: EpollSelector
+2026-04-17 18:05:23,462 - DEBUG - Using selector: EpollSelector
