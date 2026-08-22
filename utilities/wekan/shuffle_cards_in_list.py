@@ -3,10 +3,11 @@ from random import shuffle
 import common
 
 """
-python3 \
-/home/user/repos/ShuraRepo/path_depended/utilities/wekan/shuffle_cards_in_list.py \
---board_title="work" \
---list_title="Завтра"
+ssh myfirstvps \
+  'python3 \
+  /root/myfirstvps/utilities/wekan/shuffle_cards_in_list.py \
+  --board_title="work" \
+  --list_title="Завтра"'
 """
 
 def shuffle_cards_in_list(board_title, list_title):

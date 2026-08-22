@@ -10,7 +10,7 @@ def main():
     for item in items:
         common.post_card(item, 'work', token)
         print(f'"{item}"')
-    print(f'\n{len(text)} tasks successfull posted to "work" board')
+    print(f'\n{len(items)} tasks successfull posted to "work" board')
 
 def prompt_with_keep():
     print('Вырежи текст из заметки, вернись сюда и нажми enter')
