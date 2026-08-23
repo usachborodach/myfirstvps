@@ -19,6 +19,9 @@ def set_sort_val(min_sort_val, today_str, db, list_id):
     decr_sort_val = min_sort_val - 1
     collection.update_one(query, {'$set': {'sort': decr_sort_val}})
 
+    doc = collection.find_one(query)
+    print(doc)
+
 def get_min_sort_val(db, list_id):
     collection = db['cards']
     query = {'archived': False, 'listId': list_id}
