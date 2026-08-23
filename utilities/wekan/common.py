@@ -1,8 +1,25 @@
 import json
+import subprocess
+import atexit
+import time
 import requests
 from pymongo import MongoClient
 
 WEKAN_URL = 'http://84.54.57.22:2000'
+
+def open_tunnel():
+    ssh_process = subprocess.Popen(
+        ['ssh', '-L', '27017:localhost:27017', 'myfirstvps', '-N'],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL
+    )
+    atexit.register(lambda: ssh_process.terminate())
+    time.sleep(2)
+    return ssh_process
+
+def close_tunnel(ssh_process):
+    ssh_process.terminate()
+    ssh_process.wait(timeout=5)
 
 def connect_to_mongo():
     client = MongoClient()
@@ -55,7 +72,3 @@ def post_card(title, board_name, list_name, token):
     response = requests.post(post_the_card_url, headers=headers, data=request_data)
     response = json.loads(response.text)
     return response['_id']
-
-token = get_token()
-id = post_card('тест', 'work', 'Новые', token)
-print(id)
