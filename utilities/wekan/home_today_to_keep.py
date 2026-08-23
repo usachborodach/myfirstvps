@@ -2,15 +2,25 @@ import pyperclip
 import webbrowser
 from common import connect_to_mongo
 import subprocess
+import time
+import atexit
 
 HOME_TODAY_LIST_ID = 'cph83ZAWgRkSbWD3o'
 
 def main():
-    subprocess.run(['ssh', '-L', '27017:localhost:27017', 'myfirstvps', '-N'])
+    ssh_process = subprocess.Popen(
+        ['ssh', '-L', '27017:localhost:27017', 'myfirstvps', '-N'],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL
+    )
+    atexit.register(lambda: ssh_process.terminate())
+    time.sleep(2)
     client, db = connect_to_mongo()
     cards_to_clipboard(db)
     open_keep()
     client.close()
+    ssh_process.terminate()
+    ssh_process.wait(timeout=5)
 
 def open_keep():
     keep_url = 'https://keep.google.com/#NOTE/'
