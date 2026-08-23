@@ -1,11 +1,14 @@
 from datetime import datetime
 from move_cards_between_lists import move_cards_between_lists
 from shuffle_cards_in_list import shuffle_cards_in_list
+from create_sep_in_daily import main as create_sep_in_daily
 
 def main():
     day, day_of_week = get_days()
-    monthly(day_of_week, day)
-    weekly(day_of_week)
+    if day_of_week == 'Saturday' and day <= 7:
+        monthly()
+    if day_of_week == 'Sunday':
+        weekly()
     daily()
 
 def get_days():
@@ -19,16 +22,15 @@ def daily():
     move_cards_between_lists('home', 'Завтра', 'Новые')
     shuffle_cards_in_list('work', 'Новые')
     shuffle_cards_in_list('home', 'Новые')
+    create_sep_in_daily()
 
-def weekly(day_of_week):
-    if day_of_week == 'Sunday':
-        move_cards_between_lists('work', 'На следующей неделе', 'Новые')
-        move_cards_between_lists('home', 'На следующей неделе', 'Новые')
+def weekly():
+    move_cards_between_lists('work', 'На следующей неделе', 'Новые')
+    move_cards_between_lists('home', 'На следующей неделе', 'Новые')
 
-def monthly(day_of_week, day):
-    if day_of_week == 'Saturday' and day <= 7:
-        move_cards_between_lists('work', 'В следующем месяце', 'Новые')
-        move_cards_between_lists('home', 'В следующем месяце', 'Новые')
+def monthly():
+    move_cards_between_lists('work', 'В следующем месяце', 'Новые')
+    move_cards_between_lists('home', 'В следующем месяце', 'Новые')
 
 if __name__ == '__main__':
     main()
