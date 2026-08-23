@@ -5,7 +5,8 @@ def main():
     today_str = get_today_str()
     token = common.get_token()
 
-    common.post_card(today_str, 'work', 'Новые', token)
+    response = common.post_card(today_str, 'work', 'Новые', token)
+    print(response)
     exit()
 
 

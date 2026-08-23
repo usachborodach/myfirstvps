@@ -52,4 +52,5 @@ def post_card(title, board_name, list_name, token):
         'authorId': 'YHrRysNZnbE5eEfrh',
         # 'swimlaneId': f"{swimlane_ids[board_name]}"
     }
-    requests.post(post_the_card_url, headers=headers, data=request_data)
+    response = requests.post(post_the_card_url, headers=headers, data=request_data)
+    return response
