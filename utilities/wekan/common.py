@@ -53,4 +53,5 @@ def post_card(title, board_name, list_name, token):
         'swimlaneId': f"{swimlane_ids[board_name]}"
     }
     response = requests.post(post_the_card_url, headers=headers, data=request_data)
-    return response
+    return json.loads(response.text)
+    
