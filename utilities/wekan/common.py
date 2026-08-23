@@ -37,7 +37,7 @@ def get_token():
 def post_card(title, board_name, list_name, token):
     board_id = get_board_id(board_name)
     list_id = get_list_id(board_name, list_name)
-    # swimlane_ids = {'work': 'xbct7XafyWxqGhhWq', 'home': 'Qh75JghWz3eyAhY9K'}
+    swimlane_ids = {'work': 'xbct7XafyWxqGhhWq', 'home': 'Qh75JghWz3eyAhY9K'}
     post_the_card_url = (
         f'{WEKAN_URL}/api/'
         f'boards/{board_id}/'
@@ -50,7 +50,7 @@ def post_card(title, board_name, list_name, token):
         'title': title,
         'description': '',
         'authorId': 'YHrRysNZnbE5eEfrh',
-        # 'swimlaneId': f"{swimlane_ids[board_name]}"
+        'swimlaneId': f"{swimlane_ids[board_name]}"
     }
     response = requests.post(post_the_card_url, headers=headers, data=request_data)
     return response
