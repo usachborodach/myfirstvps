@@ -4,7 +4,7 @@ from datetime import datetime
 def main():
     today_str = get_today_str()
     token = common.get_token()
-    card_id = common.post_card(today_str, 'work', 'Новые', token)
+    card_id = common.post_card(today_str, 'work', 'Дейлик', token)
     client, db = common.connect_to_mongo()
     min_sort_val = get_min_sort_val(db)
     set_sort_val(db, card_id, min_sort_val)
