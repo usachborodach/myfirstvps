@@ -6,12 +6,19 @@ def main():
     token = common.get_token()
     # common.post_card(today_str, 'work', token)
     client, db = common.connect_to_mongo()
-    min_sort_val = get_min_sort_val(db)
-    print(min_sort_val)
-
-def get_min_sort_val(db):
-    collection = db['cards']
     list_id = common.get_list_id(db, 'work', 'Дейлик')
+    min_sort_val = get_min_sort_val(db, list_id)
+    set_sort_val(min_sort_val, today_str, db, list_id)
+    client.close()
+
+def set_sort_val(min_sort_val, today_str, db, list_id):
+    collection = db['cards']
+    query = {'listId':list_id, 'title': today_str}
+    decr_sort_val = min_sort_val - 1
+    collection.update_one(query, {'$set': {'sort': decr_sort_val}})
+
+def get_min_sort_val(db, list_id):
+    collection = db['cards']
     query = {'archived': False, 'listId': list_id}
     projection = {'_id': -1, 'sort':1}
     cursor = collection.find(query, projection).sort('sort', 1).limit(1)
