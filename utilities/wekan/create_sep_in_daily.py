@@ -6,7 +6,7 @@ def main():
     token = common.get_token()
 
     response = common.post_card(today_str, 'work', 'Новые', token)
-    print(response)
+    print(response.text)
     exit()
 
 
