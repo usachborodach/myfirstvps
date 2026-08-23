@@ -21,7 +21,7 @@ def get_board_id(board_title):
 def get_list_id(board_title, list_title):
     client, db = connect_to_mongo()
     collection = db['lists']
-    board_id = get_board_id(db, board_title)
+    board_id = get_board_id(board_title)
     query = {'title': list_title, 'boardId': board_id}
     projection = {'_id': 1}
     document = collection.find_one(query, projection)
