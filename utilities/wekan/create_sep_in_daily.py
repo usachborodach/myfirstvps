@@ -6,9 +6,9 @@ from datetime import datetime
 def main():
     today_str = get_today_str()
     token = common.get_token()
-    common.post_card(today_str, 'work', 'Дейлик', token)
+    # common.post_card(today_str, 'work', 'Дейлик', token)
     client, db = common.connect_to_mongo()
-    list_id = common.get_list_id(db, 'work', 'Дейлик')
+    list_id = common.get_list_id('work', 'Дейлик')
     min_sort_val = get_min_sort_val(db, list_id)
     set_sort_val(min_sort_val, today_str, db, list_id)
     client.close()
