@@ -4,29 +4,22 @@ from datetime import datetime
 def main():
     today_str = get_today_str()
     token = common.get_token()
-
-    response = common.post_card(today_str, 'work', 'Новые', token)
-    print(response)
-    exit()
-
-
+    card_id = common.post_card(today_str, 'work', 'Новые', token)
     client, db = common.connect_to_mongo()
-    list_id = common.get_list_id('work', 'Дейлик')
-    min_sort_val = get_min_sort_val(db, list_id)
-    set_sort_val(min_sort_val, today_str, db, list_id)
+    min_sort_val = get_min_sort_val(db)
+    set_sort_val(db, card_id, min_sort_val)
     client.close()
 
-def set_sort_val(min_sort_val, today_str, db, list_id):
+def set_sort_val(db, card_id, min_sort_val):
     collection = db['cards']
-    query = {'listId':list_id, 'title': today_str}
-    decr_sort_val = min_sort_val - 1
-    collection.update_one(query, {'$set': {'sort': decr_sort_val}})
+    query = {'_id': card_id}
+    decremented_sort_val = min_sort_val - 1
+    operation = {'$set': {'sort': decremented_sort_val}}
+    collection.update_one(query, operation)
 
-    doc = collection.find_one(query)
-    print(doc)
-
-def get_min_sort_val(db, list_id):
+def get_min_sort_val(db):
     collection = db['cards']
+    list_id = common.get_list_id('work', 'Дейлик')
     query = {'archived': False, 'listId': list_id}
     projection = {'_id': -1, 'sort':1}
     cursor = collection.find(query, projection).sort('sort', 1).limit(1)
