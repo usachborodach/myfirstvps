@@ -15,7 +15,7 @@ def get_min_sort_val(db):
     query = {'archived': False, 'listId': list_id}
     projection = {'_id': -1, 'sort':1}
     cursor = collection.find(query, projection).sort('sort', 1).limit(1)
-    docs = list(docs)
+    docs = list(cursor)
     return docs[0]['sort']
 
 def get_today_str():
