@@ -13,7 +13,7 @@ ssh myfirstvps \
 def shuffle_cards_in_list(board_title, list_title):
     client, db = common.connect_to_mongo()
     collection = db['cards']
-    list_id = common.get_list_id(db, board_title, list_title)
+    list_id = common.get_list_id(board_title, list_title)
     query = {"listId": list_id, "archived": False}
     projection = {'_id': 1}
     cursor = collection.find(query, projection)
