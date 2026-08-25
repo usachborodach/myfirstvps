@@ -24,8 +24,8 @@ def process_the_arguments():
 def move_cards_between_lists(board, source_list, target_list):
     client, db = common.connect_to_mongo()
     collection = db['cards']
-    source_list_id = common.get_list_id(db, board, source_list)
-    target_list_id = common.get_list_id(db, board, target_list)
+    source_list_id = common.get_list_id(board, source_list)
+    target_list_id = common.get_list_id(board, target_list)
     query = {"listId": source_list_id, "archived": False}
     new_value = { "$set": { "listId": target_list_id } }
     collection.update_many(query, new_value)
