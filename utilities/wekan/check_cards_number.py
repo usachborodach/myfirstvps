@@ -13,7 +13,6 @@ def main():
     structure = hide_some_data(structure)
     print_as_yaml(structure)
     client.close()
-    input()
 
 def hide_some_data(structure):
     del structure['work']['Дейлик']
