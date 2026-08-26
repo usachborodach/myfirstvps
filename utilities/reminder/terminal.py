@@ -3,9 +3,6 @@ import logger
 from command_handler import command_handler
 from datetime import datetime
 import csv
-import subprocess
-
-subprocess.run(['export', 'TERM=xterm'])
 
 interface_height = 19
 interface_width = 80
