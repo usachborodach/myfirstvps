@@ -7,11 +7,9 @@ def main():
     text = prompt_with_keep()
     items = process_text(text)
     token = common.get_token()
-    ssh_process = common.open_tunnel()
     for item in items:
         common.post_card(item, 'work', 'Новые', token)
         print(f'"{item}"')
-    common.close_tunnel(ssh_process)
     print(f'\n{len(items)} tasks successfull posted to "work" board')
 
 def prompt_with_keep():

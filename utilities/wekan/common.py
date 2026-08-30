@@ -52,13 +52,10 @@ def get_token():
     return json.loads(response)['token']
 
 def post_card(title, board_name, list_name, token):
-    board_id = get_board_id(board_name)
-    list_id = get_list_id(board_name, list_name)
-    swimlane_ids = {'work': 'xbct7XafyWxqGhhWq', 'home': 'Qh75JghWz3eyAhY9K'}
     post_the_card_url = (
         f'{WEKAN_URL}/api/'
-        f'boards/{board_id}/'
-        f'lists/{list_id}/cards'
+        f'boards/{ids["boards"][board_name]}/'
+        f'lists/{ids["lists"][board_name][list_name]}/cards'
     )
     headers = {
         'Authorization': f'Bearer {token}'
@@ -66,9 +63,30 @@ def post_card(title, board_name, list_name, token):
     request_data = {
         'title': title,
         'description': '',
-        'authorId': 'YHrRysNZnbE5eEfrh',
-        'swimlaneId': f"{swimlane_ids[board_name]}"
+        'authorId': ids['author'],
+        'swimlaneId': f"{ids['swimlanes'][board_name]}"
     }
     response = requests.post(post_the_card_url, headers=headers, data=request_data)
     response = json.loads(response.text)
     return response['_id']
+
+ids = {
+    'boards': {
+        'work': '6nEeTCXHcdq3GaqoT', 
+        'home': 'eyZsGfRcPAysgBbB3'
+    },
+    'lists': {
+        'work': {
+            'Новые': 'WwR4yf6LbzKgnhaLx',
+            'Дейлик': 'N5ibYW9jAaPoYe3hc'
+        }, 
+        'home': {
+            'Новые': 'uj8XTX37dMJT7SByr'
+        }
+    },
+    'swimlanes': {
+        'work': 'xbct7XafyWxqGhhWq', 
+        'home': 'Qh75JghWz3eyAhY9K'
+    },
+    'author': 'YHrRysNZnbE5eEfrh'
+}
