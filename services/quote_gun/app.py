@@ -18,6 +18,9 @@ def all():
 def main():
     categories = quotes_collection.distinct('category')
     categories.sort()
+    exclude = ['svetlana_anatolyevna']
+    for i in exclude:
+        categories.remove(i)
     return render_template('main.html', categories=categories)
 
 @app.route('/chance')
