@@ -2,7 +2,7 @@
 After=network.target
 
 [Service]
-WorkingDirectory=/root/quote_gun/
+WorkingDirectory=/root/myfirstvps/services/quote_gun/
 ExecStart=/usr/bin/python3 app.py --port=8002
 StandardOutput=journal
 StandardError=journal
