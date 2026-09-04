@@ -116,5 +116,5 @@ for line in lines:
 from pymongo import MongoClient
 client = MongoClient()
 db = client['quote_gun']
-collection = db['qoutes']
+collection = db['quotes']
 collection.insert_many(docs)
