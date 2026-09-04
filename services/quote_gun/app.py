@@ -4,9 +4,15 @@ import argparse
 
 app = Flask(__name__)
 
-client = MongoClient(host='127.0.0.1', port=27017)
+client = MongoClient()
 db = client['quote_gun']
 quotes_collection = db['quotes']
+
+@app.route('/')
+def categories_list():
+    categories = quotes_collection.distinct('category')
+    categories.sort()
+    return render_template('main.html', categories=categories)
 
 @app.route('/<category>')
 def quotes_by_category(category):
@@ -16,7 +22,7 @@ def quotes_by_category(category):
     ]
     docs = list(quotes_collection.aggregate(pipeline))
     items = [doc['text'] for doc in docs]
-    return render_template('index.html', items=items, category=category)
+    return render_template('quotes.html', items=items, category=category)
 
 @app.route('/favicon.png')
 def favicon():

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>quote_gun</title>
+</head>
+<body>
+    <h1>quote_gun</h1>
+    <ul>
+        {% for cat in categories %}
+            <li><a href="/{{ cat }}">{{ cat }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
