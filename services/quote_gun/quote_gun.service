@@ -3,10 +3,10 @@ After=network.target
 
 [Service]
 WorkingDirectory=/root/myfirstvps/services/quote_gun/
-ExecStart=/usr/bin/python3 app.py --port=8002
+ExecStart=/usr/bin/gunicorn -w 4 -b 0.0.0.0:8002 app:app
 StandardOutput=journal
 StandardError=journal
-KillMode=process
+KillMode=mixed
 User=root
 Restart=on-failure
 RestartSec=5

@@ -45,12 +45,3 @@ def quotes_by_category(category):
 @app.route('/favicon.png')
 def favicon():
     return send_from_directory('static', 'favicon.png')
-
-def get_port():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--port')
-    args = parser.parse_args()
-    return args.port
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=get_port(), debug=True)
