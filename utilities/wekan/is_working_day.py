@@ -5,7 +5,7 @@ USE_DEBUG_DATE = False
 DEBUG_DATE_STR = '26.09.2026'
 VACATION_PERIOD = '03.09.2026-16.09.2026'
 
-def main() -> None:
+def main() -> bool:
     date_obj = get_current_or_debug_date(USE_DEBUG_DATE, DEBUG_DATE_STR)
     return is_workday(date_obj)
 
