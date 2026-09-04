@@ -12,7 +12,8 @@ quotes_collection = db['quotes']
 def categories_list():
     categories = quotes_collection.distinct('category')
     categories.sort()
-    return render_template('main.html', categories=categories)
+    # return render_template('main.html', categories=categories)
+    return 'hello world'
 
 @app.route('/<category>')
 def quotes_by_category(category):
@@ -23,8 +24,9 @@ def quotes_by_category(category):
     docs = list(quotes_collection.aggregate(pipeline))
     items = [doc['text'] for doc in docs]
     return render_template('quotes.html', items=items, category=category)
+0
 
-@app.route('/favicon.png')
+0@app.route('/favicon.png')
 def favicon():
     return send_from_directory('static', 'favicon.png')
 
