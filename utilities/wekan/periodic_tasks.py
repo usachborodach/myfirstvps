@@ -18,6 +18,8 @@ def get_days():
     return day, day_of_week
 
 def daily():
+    move_cards_between_lists('work', 'Сегодня', 'Новые')
+    move_cards_between_lists('home', 'Сегодня', 'Новые')
     move_cards_between_lists('work', 'Завтра', 'Новые')
     move_cards_between_lists('home', 'Завтра', 'Новые')
     shuffle_cards_in_list('work', 'Новые')
