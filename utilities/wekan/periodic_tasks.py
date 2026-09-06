@@ -5,9 +5,9 @@ from create_sep_in_daily import main as create_sep_in_daily
 
 def main():
     day, day_of_week = get_days()
-    if day_of_week == 'Saturday' and day <= 7:
+    if day_of_week == 'Friday' and day <= 7:
         monthly()
-    if day_of_week == 'Sunday':
+    if day_of_week == 'Saturday':
         weekly()
     daily()
 
