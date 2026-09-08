@@ -3,7 +3,7 @@ import subprocess
 import zipfile
 from datetime import date
 
-MAX_BACKUPS = 30
+MAX_BACKUPS = 60
 BACKUPS_DIR = '/root/backups'
 
 def main():
