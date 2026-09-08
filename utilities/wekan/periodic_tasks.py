@@ -2,6 +2,7 @@ from datetime import datetime
 from move_cards_between_lists import move_cards_between_lists
 from shuffle_cards_in_list import shuffle_cards_in_list
 from create_sep_in_daily import main as create_sep_in_daily
+from remove_archived_objects import main as remove_archived_objects
 
 def main():
     day, day_of_week = get_days()
@@ -25,6 +26,7 @@ def daily():
     shuffle_cards_in_list('work', 'Новые')
     shuffle_cards_in_list('home', 'Новые')
     create_sep_in_daily()
+    remove_archived_objects()
 
 def weekly():
     move_cards_between_lists('work', 'На следующей неделе', 'Новые')
