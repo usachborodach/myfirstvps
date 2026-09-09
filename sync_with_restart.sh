@@ -10,3 +10,6 @@ ssh myfirstvps "systemctl status timetracker"
 
 ssh myfirstvps "systemctl restart quote_gun"
 ssh myfirstvps "systemctl status quote_gun"
+
+ssh myfirstvps "systemctl restart achievement_tracker"
+ssh myfirstvps "systemctl status achievement_tracker"
