@@ -1,17 +1,62 @@
 import os
+import logging
+import time
 from datetime import datetime, timedelta
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from werkzeug.security import check_password_hash
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 load_dotenv()
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    handlers=[
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-key-change-in-production')
 
-# MongoDB
+# ---------- ДОБАВЛЯЕМ ЛИМИТЕР (опционально) ----------
+# Ограничиваем количество запросов с одного IP: 60 в минуту (можно настроить)
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["60 per minute"],
+    storage_uri="memory://",
+)
+
+# ---------- ЛОГИРОВАНИЕ ВСЕХ ЗАПРОСОВ ----------
+@app.before_request
+def before_request():
+    request.start_time = time.time()
+
+@app.after_request
+def after_request(response):
+    if hasattr(request, 'start_time'):
+        elapsed = time.time() - request.start_time
+        logger.info(
+            f"Request: {request.method} {request.path} "
+            f"IP: {request.remote_addr} "
+            f"Status: {response.status_code} "
+            f"Time: {elapsed:.3f}s"
+        )
+    return response
+
+# ---------- ОБРАБОТЧИК ОШИБОК ----------
+@app.errorhandler(Exception)
+def handle_exception(e):
+    logger.exception("Unhandled exception occurred")
+    return "Internal Server Error", 500
+
+# ---------- MongoDB ----------
 client = MongoClient(os.getenv('MONGO_URI', 'mongodb://localhost:27017/achievements'))
 db = client.get_database()
 days_collection = db.days
@@ -36,20 +81,16 @@ def verify_password(username, password):
     return (username == os.getenv('USERNAME') and
             check_password_hash(PASSWORD_HASH, password))
 
-# Категории (они же заголовки колонок)
 CATEGORIES = {
     'personal_coding': 'Кодил для себя',
     'work': 'Работал',
     'home_tasks': 'Домашние задачи'
 }
 
-# Получение или создание документа дня
 def get_or_create_day(date_obj):
-    # date_obj – объект date
     date_datetime = datetime(date_obj.year, date_obj.month, date_obj.day)
     doc = days_collection.find_one({'date': date_datetime})
     if doc is None:
-        # Создаём пустую запись
         new_doc = {
             'date': date_datetime,
             'personal_coding': '',
@@ -58,9 +99,9 @@ def get_or_create_day(date_obj):
         }
         days_collection.insert_one(new_doc)
         doc = new_doc
+        logger.info(f"Created new day record for {date_obj}")
     return doc
 
-# Роуты
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -69,15 +110,18 @@ def login():
         if verify_password(username, password):
             user = User(username)
             login_user(user)
+            logger.info(f"User {username} logged in from {request.remote_addr}")
             next_page = request.args.get('next')
             return redirect(next_page or url_for('index'))
         else:
+            logger.warning(f"Failed login attempt for {username} from {request.remote_addr}")
             flash('Неверный логин или пароль', 'danger')
     return render_template('login.html')
 
 @app.route('/logout')
 @login_required
 def logout():
+    logger.info(f"User {current_user.id} logged out from {request.remote_addr}")
     logout_user()
     return redirect(url_for('login'))
 
@@ -94,7 +138,6 @@ def index():
         date_obj = datetime.now().date()
 
     doc = get_or_create_day(date_obj)
-    # Передаём данные в шаблон
     return render_template('index.html',
                            date=date_obj,
                            doc=doc,
@@ -104,37 +147,41 @@ def index():
 @app.route('/update', methods=['POST'])
 @login_required
 def update():
-    data = request.json
-    date_str = data.get('date')
-    category = data.get('category')
-    text = data.get('text', '').strip()
-
-    if not date_str or not category:
-        return jsonify({'success': False, 'message': 'Недостаточно данных'}), 400
-
     try:
+        data = request.json
+        date_str = data.get('date')
+        category = data.get('category')
+        text = data.get('text', '').strip()
+
+        if not date_str or not category:
+            logger.warning(f"Missing fields from {request.remote_addr}: {data}")
+            return jsonify({'success': False, 'message': 'Недостаточно данных'}), 400
+
         date_obj = datetime.strptime(date_str, '%Y-%m-%d').date()
-    except ValueError:
-        return jsonify({'success': False, 'message': 'Неверный формат даты'}), 400
+        if category not in CATEGORIES:
+            logger.warning(f"Invalid category {category} from {request.remote_addr}")
+            return jsonify({'success': False, 'message': 'Неверная категория'}), 400
 
-    if category not in CATEGORIES:
-        return jsonify({'success': False, 'message': 'Неверная категория'}), 400
-
-    # Обновляем только указанное поле
-    result = days_collection.update_one(
-        {'date': datetime(date_obj.year, date_obj.month, date_obj.day)},
-        {'$set': {category: text}}
-    )
-    if result.matched_count:
-        return jsonify({'success': True})
-    else:
-        # Если документа нет, создаём (на случай гонки)
-        get_or_create_day(date_obj)
-        days_collection.update_one(
+        result = days_collection.update_one(
             {'date': datetime(date_obj.year, date_obj.month, date_obj.day)},
             {'$set': {category: text}}
         )
-        return jsonify({'success': True})
+        if result.matched_count:
+            logger.info(f"Updated {category} for {date_str} by {current_user.id}: {text[:50]}")
+            return jsonify({'success': True})
+        else:
+            # если документа нет – создаём
+            get_or_create_day(date_obj)
+            days_collection.update_one(
+                {'date': datetime(date_obj.year, date_obj.month, date_obj.day)},
+                {'$set': {category: text}}
+            )
+            logger.info(f"Created and updated {category} for {date_str}")
+            return jsonify({'success': True})
+    except Exception as e:
+        logger.exception(f"Error in /update: {e}")
+        return jsonify({'success': False, 'message': 'Internal error'}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8004, debug=False)  # порт можно изменить
+    logger.info("Starting achievement tracker in debug mode (port 8004)")
+    app.run(host='0.0.0.0', port=8004, debug=False)
