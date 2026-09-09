@@ -2,7 +2,7 @@ from datetime import datetime
 from move_cards_between_lists import move_cards_between_lists
 from shuffle_cards_in_list import shuffle_cards_in_list
 from create_sep_in_daily import main as create_sep_in_daily
-from utilities.wekan import remove_objects
+import remove_objects
 
 def main():
     day, day_of_week = get_days()
