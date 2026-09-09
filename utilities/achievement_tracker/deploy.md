@@ -12,5 +12,3 @@ python -c "from werkzeug.security import generate_password_hash; print(generate_
 ```
 mkdir -p /var/log/achievement_tracker
 ```
-
-
