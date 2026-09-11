@@ -9,6 +9,8 @@ from dotenv import load_dotenv
 from werkzeug.security import check_password_hash
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from werkzeug.exceptions import HTTPException
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 load_dotenv()
 
@@ -22,6 +24,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-key-change-in-production')
 
 # ---------- ДОБАВЛЯЕМ ЛИМИТЕР (опционально) ----------
@@ -51,6 +54,10 @@ def after_request(response):
     return response
 
 # ---------- ОБРАБОТЧИК ОШИБОК ----------
+@app.errorhandler(HTTPException)
+def handle_http_exception(e):
+    return e
+
 @app.errorhandler(Exception)
 def handle_exception(e):
     logger.exception("Unhandled exception occurred")
