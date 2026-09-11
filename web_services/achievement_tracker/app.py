@@ -2,7 +2,7 @@ import os
 import logging
 import time
 from datetime import datetime, timedelta
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from pymongo import MongoClient
 from dotenv import load_dotenv
@@ -26,6 +26,13 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-key-change-in-production')
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=30)
+app.config['REMEMBER_COOKIE_DURATION']   = timedelta(days=30)
+app.config['REMEMBER_COOKIE_HTTPONLY']   = True
+app.config['REMEMBER_COOKIE_SAMESITE']   = 'Lax'
+app.config['SESSION_COOKIE_HTTPONLY']    = True
+app.config['SESSION_COOKIE_SAMESITE']    = 'Lax'
+app.config['SESSION_COOKIE_SECURE']      = False  # True только когда будет HTTPS
 
 # ---------- ДОБАВЛЯЕМ ЛИМИТЕР (опционально) ----------
 # Ограничиваем количество запросов с одного IP: 60 в минуту (можно настроить)
@@ -40,6 +47,7 @@ limiter = Limiter(
 @app.before_request
 def before_request():
     request.start_time = time.time()
+    session.permanent = True
 
 @app.after_request
 def after_request(response):
@@ -116,7 +124,7 @@ def login():
         password = request.form['password']
         if verify_password(username, password):
             user = User(username)
-            login_user(user)
+            login_user(user, remember=True)
             logger.info(f"User {username} logged in from {request.remote_addr}")
             next_page = request.args.get('next')
             return redirect(next_page or url_for('index'))
