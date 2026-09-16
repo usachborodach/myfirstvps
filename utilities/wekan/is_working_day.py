@@ -2,11 +2,13 @@ from datetime import datetime
 from typing import Optional
 
 USE_DEBUG_DATE = False
-DEBUG_DATE_STR = '26.09.2026'
+DEBUG_DATE_STR = '16.09.2026'
 VACATION_PERIOD = '03.09.2026-16.09.2026'
 
 def main() -> bool:
     date_obj = get_current_or_debug_date(USE_DEBUG_DATE, DEBUG_DATE_STR)
+    print(date_obj)
+    print(is_workday(date_obj))
     return is_workday(date_obj)
 
 def str_to_date(date_str: str) -> datetime:
@@ -27,7 +29,10 @@ def get_current_or_debug_date(use_debug: bool = USE_DEBUG_DATE,
                               debug_date: Optional[str] = None) -> datetime:
     if use_debug and debug_date:
         return str_to_date(debug_date)
-    return datetime.now()
+    else:
+        now = datetime.now()
+        today = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        return today
 
 def is_workday(date_obj: datetime) -> bool:
     return not (is_weekend(date_obj) or is_vacation_day(date_obj))
