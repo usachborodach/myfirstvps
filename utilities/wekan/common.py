@@ -90,7 +90,8 @@ ids = {
     },
     'swimlanes': {
         'work': 'xbct7XafyWxqGhhWq', 
-        'home': 'Qh75JghWz3eyAhY9K'
+        'home': 'Qh75JghWz3eyAhY9K',
+        'chords': 'AoYvJzngwKWPRe2Hz'
     },
     'author': 'YHrRysNZnbE5eEfrh'
 }
