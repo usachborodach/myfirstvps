@@ -7,8 +7,6 @@ VACATION_PERIOD = '03.09.2026-16.09.2026'
 
 def main() -> bool:
     date_obj = get_current_or_debug_date(USE_DEBUG_DATE, DEBUG_DATE_STR)
-    print(date_obj)
-    print(is_workday(date_obj))
     return is_workday(date_obj)
 
 def str_to_date(date_str: str) -> datetime:

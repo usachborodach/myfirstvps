@@ -73,7 +73,8 @@ def post_card(title, board_name, list_name, token):
 ids = {
     'boards': {
         'work': '6nEeTCXHcdq3GaqoT', 
-        'home': 'eyZsGfRcPAysgBbB3'
+        'home': 'eyZsGfRcPAysgBbB3',
+        'chords': 'XMFqDE7eanR5EX3M4', 
     },
     'lists': {
         'work': {
@@ -82,6 +83,9 @@ ids = {
         }, 
         'home': {
             'Новые': 'uj8XTX37dMJT7SByr'
+        },
+        'chords': {
+            'Новые': 'M8dJiX5iuGf7c9Pmn'
         }
     },
     'swimlanes': {
