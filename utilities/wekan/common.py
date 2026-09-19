@@ -5,7 +5,7 @@ import time
 import requests
 from pymongo import MongoClient
 
-WEKAN_URL = 'http://84.54.57.22:8003'
+WEKAN_URL = 'https://wekan.usachborodach.ru'
 
 def open_tunnel():
     ssh_process = subprocess.Popen(
