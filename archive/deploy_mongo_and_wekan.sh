@@ -13,8 +13,8 @@ docker run -d \
   --network wekan-net \
   -e "WITH_API=true" \
   -e "MONGO_URL=mongodb://mongo:27017/wekan" \
-  -e "ROOT_URL=http://84.54.57.22:2000" \
-  -p 2000:8080 \
+  -e "ROOT_URL=https://wekan.usachborodach.ru" \
+  -p 127.0.0.1:2000:2000 \
   wekanteam/wekan:v6.22
 
 docker run -d \
