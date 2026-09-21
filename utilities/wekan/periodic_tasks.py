@@ -1,6 +1,5 @@
 from datetime import datetime
 from move_cards_between_lists import move_cards_between_lists
-from shuffle_cards_in_list import shuffle_cards_in_list
 import remove_objects
 
 def main():
@@ -22,8 +21,6 @@ def daily():
     move_cards_between_lists('home', 'Сегодня', 'Новые')
     move_cards_between_lists('work', 'Завтра', 'Новые')
     move_cards_between_lists('home', 'Завтра', 'Новые')
-    shuffle_cards_in_list('work', 'Новые')
-    shuffle_cards_in_list('home', 'Новые')
     remove_objects.archived()
     remove_objects.activities()
 
