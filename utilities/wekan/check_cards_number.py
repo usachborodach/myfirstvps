@@ -10,13 +10,8 @@ def main():
     structure = build_structure(boards_data, lists_data)
     structure = count_cards(db, structure)
     structure = restrict_structure(structure)
-    structure = hide_some_data(structure)
     print_as_yaml(structure)
     client.close()
-
-def hide_some_data(structure):
-    del structure['work']['Дейлик']
-    return structure
 
 def restrict_structure(structure):
     res = dict()
