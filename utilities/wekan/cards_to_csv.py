@@ -1,5 +1,7 @@
 import csv
 import subprocess
+from datetime import datetime
+
 import common
 
 # открытие карточки в браузере по айди
@@ -8,10 +10,12 @@ CSV_PATH = '/tmp/cards_export.csv'
 BOARD_TITLE = 'work'
 LIST_TITLES = ['Новые', 'Сегодня', 'Завтра']
 
+
 def main():
     cards = get_cards()
     save_to_csv(cards)
     open_in_vscode()
+
 
 def get_cards():
     documents = list()
@@ -26,7 +30,12 @@ def get_cards():
         documents += list(cursor)
     client.close()
     common.close_tunnel(ssh_process)
+
+    documents.sort(
+        key=lambda doc: (doc.get('createdAt') is None, doc.get('createdAt') or datetime.min)
+    )
     return documents
+
 
 def save_to_csv(documents):
     with open(CSV_PATH, 'w', newline='', encoding='utf-8') as csvfile:
@@ -40,8 +49,10 @@ def save_to_csv(documents):
                     row[key] = row[key].split('T')[0].replace('-', '.')
             writer.writerow(row)
 
+
 def open_in_vscode():
     subprocess.run(['code', CSV_PATH])
+
 
 if __name__ == '__main__':
     main()
