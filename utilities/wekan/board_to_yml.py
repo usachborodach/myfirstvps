@@ -2,7 +2,6 @@ import yaml
 import common
 
 board_title = 'work'
-lists_to_exclude = ['Дейлик']
 
 def main():
     client, db = common.connect_to_mongo()
@@ -10,14 +9,8 @@ def main():
     lists_data = get_lists_data(db, board_id)
     cards_data = get_cards_data(db, board_id)
     structure = build_structure(lists_data, cards_data)
-    structure = exclude(structure, lists_to_exclude)
     dump_to_yaml(structure)
     client.close()
-
-def exclude(structure, lists_to_exclude):
-    for list_title in lists_to_exclude:
-        del structure[list_title]
-    return structure
 
 def dump_to_yaml(structure):
     file_name = f'{board_title}_board_export.yml'
