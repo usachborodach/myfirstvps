@@ -15,15 +15,17 @@ def main():
 
 def get_cards():
     documents = list()
+    ssh_process = common.open_tunnel()
     client, db = common.connect_to_mongo()
     collection = db['cards']
     for list_title in LIST_TITLES:
-        list_id = common.get_list_id(db, BOARD_TITLE, list_title)
+        list_id = common.get_list_id(BOARD_TITLE, list_title)
         query = {'listId': list_id, 'archived': False}
         projection = {'title': 1, 'createdAt': 1, 'modifiedAt': 1, 'sort': 1}
-        cursor = collection.find(query, projection).sort({'sort': 1})
+        cursor = collection.find(query, projection).sort('sort')
         documents += list(cursor)
     client.close()
+    common.close_tunnel(ssh_process)
     return documents
 
 def save_to_csv(documents):
