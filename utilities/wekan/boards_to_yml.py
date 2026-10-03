@@ -1,20 +1,29 @@
 import yaml
 import common
+from datetime import datetime
 
-board_title = 'work'
+now = datetime.now()
+formatted_now = now.strftime("%Y-%m-%d-%H-%M")
+
+BOARDS = ['work', 'home']
+OUTPUT_FILE_PATH = f'/home/user/Downloads/wekan_export_{formatted_now}.yml'
 
 def main():
+    tunnel = common.open_tunnel()
     client, db = common.connect_to_mongo()
-    board_id = common.get_board_id(db, board_title)
-    lists_data = get_lists_data(db, board_id)
-    cards_data = get_cards_data(db, board_id)
-    structure = build_structure(lists_data, cards_data)
-    dump_to_yaml(structure)
+    res = dict()
+    for board_title in BOARDS:
+        board_id = common.get_board_id(board_title)
+        lists_data = get_lists_data(db, board_id)
+        cards_data = get_cards_data(db, board_id)
+        structure = build_structure(lists_data, cards_data)
+        res[board_title] = structure
+    dump_to_yaml(res)
     client.close()
+    common.close_tunnel(tunnel)
 
 def dump_to_yaml(structure):
-    file_name = f'{board_title}_board_export.yml'
-    with open(file_name, 'w') as fp:
+    with open(OUTPUT_FILE_PATH, 'w') as fp:
         yaml.safe_dump(structure, fp, allow_unicode=True, sort_keys=False, width=10000, default_style='"')
 
 def build_structure(lists_data, cards_data):
@@ -38,7 +47,7 @@ def get_lists_data(db, board_id):
     collection = db['lists']
     query = {'archived': False, 'boardId': board_id}
     projection = {'title': 1}
-    cursor = collection.find(query, projection).sort({'sort': 1})
+    cursor = collection.find(query, projection).sort('sort')
     docs = list(cursor)
     lists_dict = dict()
     for item in docs:
