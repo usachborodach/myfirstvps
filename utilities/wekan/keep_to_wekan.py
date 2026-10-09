@@ -1,7 +1,9 @@
 import webbrowser
 from time import sleep
-from pyperclip import paste
+import pyperclip
 import common
+
+pyperclip.set_clipboard("wl-clipboard")
 
 def main():
     text = prompt_with_keep()
@@ -19,7 +21,7 @@ def prompt_with_keep():
     note_id = '#NOTE/18qUqzvWv8ako0Nb17EwvO_I_-dAE8mcuE-K0pCl1fxgDqGvB7asGpdASPYUp-Dszg9_hgw'
     webbrowser.open(keep_url + note_id)
     input()
-    return paste()
+    return pyperclip.paste()
 
 def process_text(text):
     if text == "пусто" or text == "empty":
