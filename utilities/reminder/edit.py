@@ -9,7 +9,7 @@ def main():
     upload_csv()
 
 def download_csv():
-    command = ['scp', f'myfirstvps:{SOURCE_PATH}', LOCAL_PATH]
+    command = ['scp', '-O', f'myfirstvps:{SOURCE_PATH}', LOCAL_PATH]
     subprocess.run(command)
     print('download_csv')
 
@@ -19,7 +19,7 @@ def open_with_nano():
     print('open_with_nano')
 
 def upload_csv():
-    command = ['scp', LOCAL_PATH, f'myfirstvps:{SOURCE_PATH}']
+    command = ['scp', '-O', LOCAL_PATH, f'myfirstvps:{SOURCE_PATH}']
     subprocess.run(command)
     print('upload_csv')
 
