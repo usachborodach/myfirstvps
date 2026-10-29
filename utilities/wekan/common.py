@@ -79,7 +79,7 @@ ids = {
     'lists': {
         'work': {
             'Новые': 'WwR4yf6LbzKgnhaLx',
-            'Дейлик': 'N5ibYW9jAaPoYe3hc'
+            'Сегодня': 'JpanJHMsy7aDqgmfY'
         }, 
         'home': {
             'Новые': 'uj8XTX37dMJT7SByr'
