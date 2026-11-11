@@ -2,7 +2,7 @@
 #
 # Синхронизация списка git-репозиториев с их remote.
 # Запускается из cron, например:
-#   */5 * * * * /root/myfirstvps/utilities/pull_repos/pull_repos.sh >> /var/log/sync-repos.log 2>&1
+#   */5 * * * * /root/myfirstvps/utilities/pull_repos/pull_repos.sh >> /var/log/pull_repos.log 2>&1
 #
 set -uo pipefail
 

@@ -1,1 +1,1 @@
-ln -s /root/myfirstvps/utilities/logrotate /etc/logrotate.d/sync-repos
+ln -s /root/myfirstvps/utilities/logrotate /etc/logrotate.d/pull_repos

@@ -1,4 +1,4 @@
-/var/log/sync-repos.log {
+/var/log/pull_repos.log {
     daily
     rotate 14
     missingok
