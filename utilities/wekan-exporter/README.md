@@ -31,6 +31,10 @@ wekan_cards{board_title="work",list_title="Новые",status="archive"} 18.0
 ```bash
 python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt
+ln -s /root/myfirstvps/utitlities/wekan-exporter/wekan-exporter.service /etc/systemd/system/wekan-exporter.service
+systemctl daemon-reload
+systemctl enable --now wekan-exporter.service
+systemctl status wekan-exporter.service
 ```
 
 ## Конфигурация досок
