@@ -6,8 +6,6 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-User=wekan-exporter
-Group=wekan-exporter
 WorkingDirectory=/root/myfirstvps/utitlities/wekan-exporter
 ExecStart=/root/myfirstvps/utitlities/wekan-exporter/.venv/bin/python /root/myfirstvps/utitlities/wekan-exporter/wekan-exporter.py
 
