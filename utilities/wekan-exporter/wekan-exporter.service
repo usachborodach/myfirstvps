@@ -1,0 +1,32 @@
+[Unit]
+Description=Wekan Prometheus Exporter
+Documentation=file://opt/wekan-exporter/README.md
+After=network-online.target mongod.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=wekan-exporter
+Group=wekan-exporter
+WorkingDirectory=/opt/wekan-exporter
+ExecStart=/opt/wekan-exporter/.venv/bin/python /opt/wekan-exporter/wekan-exporter.py
+
+# Configuration (uncomment and adjust as needed)
+Environment=WEKAN_EXPORTER_PORT=9464
+#Environment=WEKAN_MONGO_URI=mongodb://localhost:27017
+#Environment=WEKAN_MONGO_DB=wekan
+#Environment=WEKAN_BOARDS_FILE=/opt/wekan-exporter/boards_data.yml
+#EnvironmentFile=-/etc/default/wekan-exporter
+
+Restart=on-failure
+RestartSec=5
+
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/wekan-exporter
+
+[Install]
+WantedBy=multi-user.target

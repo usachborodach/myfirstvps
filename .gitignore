@@ -3,3 +3,4 @@
 *.log
 tmp/exported_data/*
 utilities/reminder/reminders.csv
+*.venv*

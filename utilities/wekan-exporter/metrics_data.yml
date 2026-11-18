@@ -1,0 +1,104 @@
+- board_title: work
+  count: 0
+  list_title: Новые
+  status: active
+- board_title: work
+  count: 18
+  list_title: Новые
+  status: archive
+- board_title: work
+  count: 3
+  list_title: Сегодня
+  status: active
+- board_title: work
+  count: 6
+  list_title: Сегодня
+  status: archive
+- board_title: work
+  count: 20
+  list_title: Завтра
+  status: active
+- board_title: work
+  count: 0
+  list_title: Завтра
+  status: archive
+- board_title: work
+  count: 21
+  list_title: На следующей неделе
+  status: active
+- board_title: work
+  count: 0
+  list_title: На следующей неделе
+  status: archive
+- board_title: work
+  count: 18
+  list_title: В следующем месяце
+  status: active
+- board_title: work
+  count: 0
+  list_title: В следующем месяце
+  status: archive
+- board_title: work
+  count: 51
+  list_title: Рабочий бэклог
+  status: active
+- board_title: work
+  count: 0
+  list_title: Рабочий бэклог
+  status: archive
+- board_title: work
+  count: 51
+  list_title: Покодить
+  status: active
+- board_title: work
+  count: 0
+  list_title: Покодить
+  status: archive
+- board_title: home
+  count: 11
+  list_title: На следующей неделе
+  status: active
+- board_title: home
+  count: 0
+  list_title: На следующей неделе
+  status: archive
+- board_title: home
+  count: 0
+  list_title: Завтра
+  status: active
+- board_title: home
+  count: 0
+  list_title: Завтра
+  status: archive
+- board_title: home
+  count: 28
+  list_title: Новые
+  status: active
+- board_title: home
+  count: 0
+  list_title: Новые
+  status: archive
+- board_title: home
+  count: 0
+  list_title: Сегодня
+  status: active
+- board_title: home
+  count: 0
+  list_title: Сегодня
+  status: archive
+- board_title: home
+  count: 6
+  list_title: В следующем месяце
+  status: active
+- board_title: home
+  count: 0
+  list_title: В следующем месяце
+  status: archive
+- board_title: home
+  count: 79
+  list_title: Бэклог
+  status: active
+- board_title: home
+  count: 0
+  list_title: Бэклог
+  status: archive
