@@ -1,6 +1,25 @@
+import logging
+import logging.handlers
+import os
 import yaml
 import common
 from datetime import datetime
+
+LOG_FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'boards_to_yml.log')
+
+def setup_logging():
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.INFO)
+    handler = logging.handlers.RotatingFileHandler(
+        LOG_FILE_PATH, maxBytes=1_000_000, backupCount=5, encoding='utf-8'
+    )
+    handler.setFormatter(logging.Formatter(
+        '%(asctime)s %(levelname)s %(message)s'
+    ))
+    logger.addHandler(handler)
+    return logger
+
+logger = setup_logging()
 
 now = datetime.now()
 formatted_now = now.strftime("%Y-%m-%d-%H-%M")
@@ -9,18 +28,26 @@ BOARDS = ['work', 'home']
 OUTPUT_FILE_PATH = f'/home/user/Downloads/wekan_export_{formatted_now}.yml'
 
 def main():
+    logger.info('Export started')
     tunnel = common.open_tunnel()
     client, db = common.connect_to_mongo()
     res = dict()
-    for board_title in BOARDS:
-        board_id = common.get_board_id(board_title)
-        lists_data = get_lists_data(db, board_id)
-        cards_data = get_cards_data(db, board_id)
-        structure = build_structure(lists_data, cards_data)
-        res[board_title] = structure
-    dump_to_yaml(res)
-    client.close()
-    common.close_tunnel(tunnel)
+    try:
+        for board_title in BOARDS:
+            board_id = common.get_board_id(board_title)
+            lists_data = get_lists_data(db, board_id)
+            cards_data = get_cards_data(db, board_id)
+            logger.info("Board '%s': %d lists, %d cards", board_title, len(lists_data), len(cards_data))
+            structure = build_structure(lists_data, cards_data)
+            res[board_title] = structure
+        dump_to_yaml(res)
+        logger.info('Export finished, output written to %s', OUTPUT_FILE_PATH)
+    except Exception:
+        logger.exception('Export failed')
+        raise
+    finally:
+        client.close()
+        common.close_tunnel(tunnel)
 
 def dump_to_yaml(structure):
     with open(OUTPUT_FILE_PATH, 'w') as fp:

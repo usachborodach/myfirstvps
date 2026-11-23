@@ -3,4 +3,5 @@
 *.log
 tmp/exported_data/*
 utilities/reminder/reminders.csv
+utilities/wekan/boards_to_yml.log
 *.venv*
