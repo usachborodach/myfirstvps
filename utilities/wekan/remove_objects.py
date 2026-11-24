@@ -18,4 +18,4 @@ def activities():
 
 if __name__ == '__main__':
     archived()
-    activities()
+    # activities()
