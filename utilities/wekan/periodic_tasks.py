@@ -25,7 +25,6 @@ def daily():
     shuffle_cards_in_list('work', 'Новые')
     shuffle_cards_in_list('home', 'Новые')
     remove_objects.archived()
-    remove_objects.activities()
 
 def weekly():
     move_cards_between_lists('work', 'На следующей неделе', 'Новые')
