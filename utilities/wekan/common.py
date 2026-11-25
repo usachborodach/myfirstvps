@@ -48,14 +48,14 @@ def get_list_id(board_title, list_title):
     return document['_id']
 
 def get_token():
-    auth_url = f"{os.getenv('WEKAN_URL')}/users/login"
+    auth_url = f'{os.getenv("WEKAN_URL")}/users/login'
     auth_data = {'username': os.getenv('WEKAN_USERNAME'), 'password': os.getenv('WEKAN_PASSWORD')}
     response = requests.post(auth_url, data=auth_data).text
     return json.loads(response)['token']
 
 def post_card(title, board_name, list_name, token):
     post_the_card_url = (
-        f'{os.getenv('WEKAN_URL')}/api/'
+        f'{os.getenv("WEKAN_URL")}/api/'
         f'boards/{ids["boards"][board_name]}/'
         f'lists/{ids["lists"][board_name][list_name]}/cards'
     )
