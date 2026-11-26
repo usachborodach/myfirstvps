@@ -11,8 +11,9 @@ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 REPOS=(
   /root/ML-AI-Engineer-Interview-Handbook
-  /root/myfirstvps
   /root/qanda
+  /root/myfirstvps
+  /root/quote_gun
 )
 
 log() { printf '%s %s\n' "$(date '+%F %T')" "$*"; }
